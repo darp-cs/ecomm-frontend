@@ -1,35 +1,42 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // import {useDispatch, useSelector} from 'react-redux';
 import { Box, Link, Grid, Typography, Container, Checkbox, Button, TextField } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material";
 import { DefaultInstance } from "../utils/DefaultInstance";
-
-export const Login = (Props) => {
-    const [username,setUsername] = useState('');
+import { sendLogin } from "../actions/auth.actions";
+import { connect, useDispatch, useSelector } from "react-redux";
+import { setAuthToken,authToken } from "../reducers/auth.reducer";
+import { useNavigate } from "react-router-dom";
+export const Login = (props) => {
+    const [credential,setCredential] = useState('');
     const [pass, setPass] = useState('');
+    const dispatch = useDispatch()
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        DefaultInstance.post('users/login',{"username":username,
-        "password":pass})
-        .then( response =>{
-            //This happens after a successful response
-            console.log("worked")
-        }
+    const navigate = useNavigate()
+    const validateFields = () =>{
 
-        ).catch(
-            //This happens if unsuccessful or error
-            console.log("failed")
-        )
+    }
+
+    const sendLogin = (credential,password)=>{
+        DefaultInstance.post('auth/login', {"credential":credential,
+        "password":password})
+        .then(response=>{
+            dispatch(setAuthToken(response.data.authToken))
+            navigate('/')
+        })
+        .catch(error => {
+            console.log('error',error)
+        })
+        
+    }
+    const handleSubmit = () =>{
+        sendLogin(credential,pass)
     }
 
     
-    // const dispatch = useDispatch()
-    // const data = useSelector(state =>state.reducerName.property)
-
     return(
         <Container component="main" maxWidth="xs">
-            <Box component="form" onSubmit={handleSubmit} noValidate>
+            <Box>
                 <TextField
                 required
                 fullWidth
@@ -39,9 +46,9 @@ export const Login = (Props) => {
                 defaultValue="Username"
                 autoFocus
                 margin="normal"
-                value={username}
+                value={credential}
                 onChange={(e)=>{
-                    setUsername(e.target.value)
+                    setCredential(e.target.value)
                 }}
                 />
                 <TextField
@@ -59,8 +66,9 @@ export const Login = (Props) => {
                 />
 
                 <Button
-                type="submit"
-                variant="contained">
+                variant="contained"
+                onClick={handleSubmit}
+                >
                     Sign In
                 </Button>
 
@@ -78,4 +86,3 @@ export const Login = (Props) => {
         </Container>
     )
 }
-

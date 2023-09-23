@@ -6,7 +6,7 @@ const initialState = {
 }
 
 
-const loginReducer = (state = initialState, {type,payload})=>{
+export const loginReducer = (state = initialState, {type,payload})=>{
     switch(type){
         case actions.SET_USER_PROFILE:
             return{
