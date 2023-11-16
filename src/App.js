@@ -1,22 +1,16 @@
 // import { Main } from "./containers/Main"; //if needed input the "<Main />" jsx element on line 7
 import React, { useState } from "react";
-import { Login } from "./containers/Login";
-import { Register } from "./containers/Register";
+import { Navbar } from "./components/Navbar";
+import { Main } from "./containers/Main";
 import './App.css';
 
 function App() {
-  const [currentForm, setCurrentForm] = useState('login');
-
-  const toggleForm = (formName) => {
-    setCurrentForm(formName);
-  }
-  return (
-    <div className="App">
-    {
-      currentForm === "login" ? <Login onFormSwitch={toggleForm} /> : <Register onFormSwitch={toggleForm} />
-    }
+  return(
+    <div>
+      <Main/>
     </div>
-  );
+  )
+
 }
 
 export default App;
