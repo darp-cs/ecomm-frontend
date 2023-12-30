@@ -1,20 +1,30 @@
 import React, { useState } from "react";
 // import {useDispatch, useSelector} from 'react-redux';
 import { Box, Link, Grid, Typography, Container, Checkbox, Button, TextField } from "@mui/material";
-import { createTheme, ThemeProvider } from "@mui/material";
 import { DefaultInstance } from "../utils/DefaultInstance";
-
+import { useNavigate, useLocation} from "react-router-dom";
+import { useDispatch } from 'react-redux'
+import { setAuthState } from "../actions/auth.actions";
 export const Login = (Props) => {
-    const [username,setUsername] = useState('');
+    const [credential,setCredential] = useState('');
     const [pass, setPass] = useState('');
+
+    // const dispatch = useDispatch()
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname||"/";
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        DefaultInstance.post('users/login',{"username":username,
+        DefaultInstance.post('auth/login',{"credential":credential,
         "password":pass})
         .then( response =>{
             //This happens after a successful response
             console.log("worked")
+            console.log(response.data)
+            // dispatch(set)
+            // navigate(from, { replace: true})
         }
 
         ).catch(
@@ -36,12 +46,12 @@ export const Login = (Props) => {
                 id ="username"
                 name="username"
                 label="Username"
-                defaultValue="Username"
+                defaultValue="Username or Email"
                 autoFocus
                 margin="normal"
-                value={username}
+                value={credential}
                 onChange={(e)=>{
-                    setUsername(e.target.value)
+                    setCredential(e.target.value)
                 }}
                 />
                 <TextField
