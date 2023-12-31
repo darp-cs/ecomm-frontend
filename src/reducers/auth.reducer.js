@@ -1,32 +1,32 @@
-import * as actions from '../actions/profile.actions'
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+    isAuth:false,
     authToken: null,
     refreshToken: null,
-    auth:false
-
 }
 
-
-const authReducer = (state = initialState, {type,payload})=>{
-    switch(type){
-        case actions.SET_AUTH_TOKEN:
-            return{
-                ...state,
-                authToken:payload
-            }
-        case actions.SET_REFRESH_TOKEN:
-            return{
-                ...state,
-                refreshToken:payload
-            }
-        case actions.SET_AUTH:
-            return{
-                ...state,
-                auth:payload
-            }
-        case actions.SET_AUTH_STATE:
-            return payload
-            
+export const authSlice = createSlice({
+    name: 'auth',
+    initialState,
+    //Reducers = actions
+    reducers:{
+        setIsAuth: (state, action)=>{
+            state.isAuth = action.payload;
+        },
+        setAuthToken: (state, action)=>{
+            state.authToken = action.payload;
+        },
+        setRefreshToken: (state, action)=>{
+            state.refreshToken = action.payload;
+        },
+        setAuth:(state,action)=>{
+            state = action.payload;
+        }
     }
-}
+});
+
+
+export const {setIsAuth, setAuthToken, setAuth, setRefreshToken} = authSlice.actions;
+
+export default authSlice.reducer;

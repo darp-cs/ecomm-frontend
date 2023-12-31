@@ -1,17 +1,21 @@
-import * as actions from '../actions/profile.actions'
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    profile : {}
-
+    name:"Diego",
 }
 
-
-const loginReducer = (state = initialState, {type,payload})=>{
-    switch(type){
-        case actions.SET_USER_PROFILE:
-            return{
-                ...state,
-                datatoset:payload.data
-            }
+export const profileSlice = createSlice({
+    name: 'profile',
+    initialState,
+    //Reducers = actions
+    reducers:{
+        setName: (state,action)=>{
+            state.name = action.payload;
+        },
     }
-}
+});
+
+
+export const {setName} = profileSlice.actions;
+
+export default profileSlice.reducer;

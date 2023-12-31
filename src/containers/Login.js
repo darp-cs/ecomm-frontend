@@ -1,41 +1,33 @@
 import React, { useState } from "react";
 // import {useDispatch, useSelector} from 'react-redux';
 import { Box, Link, Grid, Typography, Container, Checkbox, Button, TextField } from "@mui/material";
-import { DefaultInstance } from "../utils/DefaultInstance";
+import { defaultInstance } from "../utils/Axios";
 import { useNavigate, useLocation} from "react-router-dom";
-import { useDispatch } from 'react-redux'
-import { setAuthState } from "../actions/auth.actions";
-export const Login = (Props) => {
+import { useDispatch, useSelector } from 'react-redux'
+import { setAuthToken, setIsAuth } from "../reducers/auth.reducer";
+export const Login = (props) => {
     const [credential,setCredential] = useState('');
     const [pass, setPass] = useState('');
 
-    // const dispatch = useDispatch()
+    // const { authToken } = useSelector((state) => state.authenticator.authToken);
+    const authToken = useSelector((state)=> state.auth.authToken);
+    const dispatch = useDispatch()
     const navigate = useNavigate();
     const location = useLocation();
-    const from = location.state?.from?.pathname||"/";
-
+    const from = location.state?.from?.pathname||"/home";
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        DefaultInstance.post('auth/login',{"credential":credential,
+        defaultInstance.post('auth/login',{"credential":credential,
         "password":pass})
         .then( response =>{
             //This happens after a successful response
-            console.log("worked")
-            console.log(response.data)
-            // dispatch(set)
-            // navigate(from, { replace: true})
-        }
-
-        ).catch(
-            //This happens if unsuccessful or error
-            console.log("failed")
-        )
+            dispatch(setAuthToken(response.data.authToken))
+            dispatch(setIsAuth(true))
+            //Navigate to either home or page user was trying to visit when they were redirected to login
+            navigate(from, { replace: true})
+        })
     }
-
-    
-    // const dispatch = useDispatch()
-    // const data = useSelector(state =>state.reducerName.property)
 
     return(
         <Container component="main" maxWidth="xs">
