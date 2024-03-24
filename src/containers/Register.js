@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Box, Link, Grid, Typography, Container, Checkbox, Button, TextField } from "@mui/material";
-import { createTheme, ThemeProvider } from "@mui/material";
 import { DefaultInstance } from "../utils/DefaultInstance";
 
 export const Register = (Props) => {
