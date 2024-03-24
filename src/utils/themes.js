@@ -4,9 +4,9 @@ import { createTheme } from '@mui/material/styles';
 export const loginTheme = createTheme({
     palette: {
       button: {
-        main: '#3A435E',
-        light: '#6C6F7F',
-        dark: '#313E50',
+        main: '#AC87C5',
+        light: '#E0AED0',
+        dark: '#756AB6',
         contrastText: '#5C6672',
       },
     },

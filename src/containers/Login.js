@@ -6,7 +6,7 @@ import { useNavigate, useLocation} from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux'
 import { setAuthToken, setIsAuth } from "../reducers/auth.reducer";
 import { Footer } from "../components/Footer";
-import { loginTheme, loginThemeTheme } from "../utils/themes";
+import { loginTheme} from "../utils/themes";
 import { ThemeProvider } from '@mui/material/styles';
 export const Login = (props) => {
     const [credential,setCredential] = useState('');
@@ -33,7 +33,6 @@ export const Login = (props) => {
     }
 
     const gridStyles = {
-        background:'#5C6672',
         minHeight: '100vh'
     }
 
